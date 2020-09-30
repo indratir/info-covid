@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.1.0)
   - SkeletonView (1.8.7)
+  - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - Alamofire
   - SkeletonView
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - SkeletonView
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   SkeletonView: ba5370f41280b2f0a76918bb143c1294232bb4f4
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 563ea544132ef69054c8937b0dbade2caffd8dc8
+PODFILE CHECKSUM: 0ab4fa98e1e1e47a421146664c8463e202b1b817
 
 COCOAPODS: 1.8.3

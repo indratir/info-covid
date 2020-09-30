@@ -6,10 +6,10 @@
 //  Copyright © 2020 Indra Tirta Nugraha. All rights reserved.
 //
 
-let IS_DEV = true
+let isDev = true
 
 func devPrint(_ message: String) {
-    if IS_DEV {
+    if isDev {
         print(message)
     }
 }

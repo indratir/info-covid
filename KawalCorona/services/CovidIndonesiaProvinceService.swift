@@ -8,20 +8,12 @@
 
 import Alamofire
 
-protocol CovidIndonesiaProvinceDelegate {
-    func onLoaded(response: [ProvinceAttribute])
-    func onError(message: String)
-}
-
 class CovidIndonesiaProvinceService {
-    private let delegate: CovidIndonesiaProvinceDelegate!
     
-    init(delegate: CovidIndonesiaProvinceDelegate) {
-        self.delegate = delegate
-    }
+    static let shared = CovidIndonesiaProvinceService()
+    lazy var stringUrl = "https://api.kawalcorona.com/indonesia/provinsi"
     
-    func load() {
-        let stringUrl = "https://api.kawalcorona.com/indonesia/provinsi"
+    func load(completion: @escaping (_ result: [ProvinceAttribute]?, _ errorMessage: String?) -> Void) {
         devPrint("service: url \(stringUrl)")
         
         AF.request(stringUrl).responseJSON { response in
@@ -31,16 +23,15 @@ class CovidIndonesiaProvinceService {
                     let jsonDecoder = JSONDecoder()
                     if let data = response.data {
                         let responseObject = try jsonDecoder.decode([ProvinceAttribute].self, from: data)
-                        self.delegate.onLoaded(response: responseObject)
+                        completion(responseObject, nil)
                     }
                 } catch let error {
                     devPrint("service: error parsing data -> \(error)")
-                    self.delegate.onError(message: "Terjadi kesalahan pada server, harap hubungi administrator.")
+                    completion(nil, "Terjadi kesalahan pada server, harap hubungi administrator.")
                 }
             case .failure(let error):
                 devPrint("service: connection failure -> \(error)")
-                self.delegate.onError(message: "Server timed out")
-                break
+                completion(nil, "Server timed out")
             }
         }
     }

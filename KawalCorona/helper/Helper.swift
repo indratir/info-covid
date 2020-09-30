@@ -33,6 +33,6 @@ enum PatientType: String {
     case died
 }
 
-protocol MainViewDelegate {
+protocol MainViewDelegate: AnyObject {
     func changeProvinceData(type: PatientType, index: Int)
 }

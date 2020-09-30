@@ -11,7 +11,7 @@ import UIKit
 class ProvinceTabView: UIView {
     @IBOutlet var containerView: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
-    var delegate: MainViewDelegate?
+    weak var delegate: MainViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

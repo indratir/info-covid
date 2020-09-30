@@ -8,5 +8,6 @@ target 'KawalCorona' do
   # Pods for KawalCorona
   pod 'Alamofire'
   pod 'SkeletonView'
+  pod 'SwiftLint'
 
 end
