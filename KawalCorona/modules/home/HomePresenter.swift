@@ -10,29 +10,24 @@ import Foundation
 
 class HomePresenter: HomePresenterDelegate {
     var view: HomeViewDelegate?
-    lazy var data = HomeData(dashboard: nil, provinces: nil)
     
-    func getHomeData() {
+    func getDashboardData() {
         CovidIndonesiaService.shared.load { (result, error) in
-            if let errorMessage = error {
+            if let dashboardData = result {
+                self.view?.showDashboardData(dashboardData)
+            } else if let errorMessage = error {
                 self.view?.showError(errorMessage)
-                return
-            } else {
-                self.data.dashboard = result
             }
         }
-        
+    }
+    
+    func getProvincesData() {
         CovidIndonesiaProvinceService.shared.load { (result, error) in
-            if let errorMessage = error {
+            if let provincesData = result {
+                self.view?.showProvincesData(provincesData)
+            } else if let errorMessage = error {
                 self.view?.showError(errorMessage)
-                return
-            } else {
-                self.data.provinces = result
             }
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-            self.view?.showHomeData(self.data)
-        })
     }
 }

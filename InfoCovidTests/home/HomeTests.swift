@@ -32,14 +32,29 @@ class HomeTests: XCTestCase {
         XCTAssertNotNil(HomeRouter.createModule())
     }
     
-    func testGetHomeData() {
-        let expectation = XCTestExpectation(description: "Get Home Data")
+    func testGetDashboardData() {
+        let expectation = XCTestExpectation(description: "Get Dashboard Data")
         
-        presenter?.getHomeData()
+        presenter?.getDashboardData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
             if let view = self.presenter?.view as? MockHomeView {
-                XCTAssertTrue(view.showHomeDataCalled)
+                XCTAssertTrue(view.showDashboardDataCalled)
+                expectation.fulfill()
+            }
+        })
+        
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
+    func testGetProvincesData() {
+        let expectation = XCTestExpectation(description: "Get Provinces Data")
+        
+        presenter?.getProvincesData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+            if let view = self.presenter?.view as? MockHomeView {
+                XCTAssertTrue(view.showProvincesDataCalled)
                 expectation.fulfill()
             }
         })

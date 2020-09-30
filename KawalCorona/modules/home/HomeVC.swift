@@ -18,11 +18,8 @@ class HomeVC: UIViewController, HomeViewDelegate {
     
     var presenter: HomePresenterDelegate?
     var stickyHeaderView: ProvinceTabView?
-    var data: HomeData? {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var dashboardData: DashboardData?
+    var provincesData: [ProvinceAttribute]?
     
     var selectedPatientType: PatientType = .recovered
     var selectedSegmentIndex: Int = 0
@@ -57,7 +54,8 @@ class HomeVC: UIViewController, HomeViewDelegate {
     }
     
     @objc func onRefresh() {
-        presenter?.getHomeData()
+        presenter?.getDashboardData()
+        presenter?.getProvincesData()
     }
     
     func setSections() {
@@ -67,8 +65,14 @@ class HomeVC: UIViewController, HomeViewDelegate {
         sections.append(footerIdentifier)
     }
     
-    func showHomeData(_ data: HomeData) {
-        self.data = data
+    func showDashboardData(_ dashboardData: DashboardData) {
+        self.dashboardData = dashboardData
+        tableView.reloadData()
+    }
+    
+    func showProvincesData(_ provincesData: [ProvinceAttribute]) {
+        self.provincesData = provincesData
+        tableView.reloadData()
     }
     
     func showError(_ message: String) {
@@ -90,7 +94,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         case headerIdentifier, summaryIdentifier, footerIdentifier:
             return 1
         case provinceDataIdentifier:
-            if let provinceDataCount = data?.provinces?.count {
+            if let provinceDataCount = provincesData?.count {
                 return provinceDataCount
             }
             
@@ -110,13 +114,13 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             }
         case summaryIdentifier:
             if let cell = tableView.dequeueReusableCell(withIdentifier: summaryIdentifier) as? SummaryCell {
-                cell.setData(dashboardData: data?.dashboard)
+                cell.setData(dashboardData: dashboardData)
                 
                 return cell
             }
         case provinceDataIdentifier:
             if let cell = tableView.dequeueReusableCell(withIdentifier: provinceDataIdentifier) as? ProvinceDataCell {
-                cell.setData(data?.provinces?[indexPath.row], type: selectedPatientType)
+                cell.setData(provincesData?[indexPath.row], type: selectedPatientType)
                 
                 return cell
             }

@@ -9,9 +9,14 @@
 @testable import Info_Covid
 
 class MockHomeView: HomeVC {
-    var showHomeDataCalled: Bool = false
+    var showDashboardDataCalled = false
+    var showProvincesDataCalled = false
     
-    override func showHomeData(_ data: HomeData) {
-        showHomeDataCalled = true
+    override func showDashboardData(_ dashboardData: DashboardData) {
+        showDashboardDataCalled = true
+    }
+    
+    override func showProvincesData(_ provincesData: [ProvinceAttribute]) {
+        showProvincesDataCalled = true
     }
 }

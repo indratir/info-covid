@@ -10,11 +10,13 @@ import UIKit
 
 protocol HomePresenterDelegate: AnyObject {
     var view: HomeViewDelegate? {get set}
-    func getHomeData()
+    func getDashboardData()
+    func getProvincesData()
 }
 
 protocol HomeViewDelegate: AnyObject {
     var presenter: HomePresenterDelegate? {get set}
-    func showHomeData(_ data: HomeData)
+    func showDashboardData(_ dashboardData: DashboardData)
+    func showProvincesData(_ provincesData: [ProvinceAttribute])
     func showError(_ message: String)
 }
